@@ -1,0 +1,35 @@
+- hosts: demo
+  tasks:
+  
+  # A network shared by the different containers
+  - name: Create the gateway network
+    docker_network:
+      name: gatewaynet
+
+  # The local MQTT broker
+  # - name: Install Mosquitto inside Docker
+  #   docker_container:
+  #     name: mqtt-message-broker
+  #     image: tellu/rsd-mqtt-broker:latest
+  #     networks:
+  #     - name: gatewaynet
+  #     #image: eclipse-mosquitto:latest
+  #     restart_policy: unless-stopped
+  #     ports:
+  #       - "1883:1883" # MQTT
+  #       - "9001:9001" # MQTT over websocket
+  #     log_options:
+  #       max-size: 10m # Limit log size
+
+  # Deploy NodeRed
+  - name: Install NodeRed
+    docker_container:
+      name: node-red
+      image: nodered/node-red-docker:rpi-v8
+      networks:
+      - name: gatewaynet
+      restart_policy: unless-stopped
+      ports:
+        - "1880:1880" # Web interface
+      log_options:
+        max-size: 10m # Limit log size

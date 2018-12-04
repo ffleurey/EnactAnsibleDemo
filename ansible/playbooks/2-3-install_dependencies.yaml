@@ -1,0 +1,19 @@
+- hosts: demo
+  tasks:
+    - name: Install dependencies
+      apt:
+        name:
+          - libmosquitto-dev
+          - libbluetooth-dev
+          - libconfuse-dev
+          - libffi-dev
+          - libssl-dev
+          - build-essential
+          - avrdude
+          - python-pip
+          - libgps-dev
+          # - gpsd
+          # - gpsd-clients
+          - wiringpi
+        state: latest
+        update_cache: yes

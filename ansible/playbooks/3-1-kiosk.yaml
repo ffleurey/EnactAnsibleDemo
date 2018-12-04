@@ -1,0 +1,50 @@
+- hosts: demo
+  tasks:
+    - name: Install dependencies for Kiosk mode
+      apt:
+        name:
+          - xserver-xorg 
+          - x11-xserver-utils 
+          - xinit
+          - openbox
+          - chromium-browser
+        state: latest
+        update_cache: yes
+    
+    - name: Set system to console mode
+      command: "systemctl set-default multi-user.target"
+      become: true
+
+    - name: Edit autologin@.service
+      command: "sed /etc/systemd/system/autologin@.service -i -e \"s#^ExecStart=-/sbin/agetty --autologin [^[:space:]]*#ExecStart=-/sbin/agetty --autologin pi#\""
+      become: true
+
+    - name: Enable autologin for user pi
+      command: "ln -fs /etc/systemd/system/autologin@.service /etc/systemd/system/getty.target.wants/getty@tty1.service"
+      become: true
+
+    - name: Copy autostart file
+      copy:
+        src: ../private-files/autostart
+        dest: /etc/xdg/openbox/
+        owner: root
+        mode: 0755
+
+    - name: Copy autostart file
+      template:
+        src: ../private-files/autostart
+        dest: /etc/xdg/openbox/autostart
+        owner: root
+        mode: 0755
+
+    - name: Setup auto-login for user pi
+      lineinfile:
+        path: /home/pi/.bashrc
+        insertafter: EOF
+        line: '[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor'
+
+    - name: 'Reboot'
+      shell: sleep 2 && reboot
+      async: 1
+      poll: 0
+      ignore_errors: true

@@ -1,0 +1,6 @@
+- import_playbook: ./playbooks/2-0-install_docker.yaml
+- import_playbook: ./playbooks/2-1-docker_containers.yaml
+- import_playbook: ./playbooks/3-1-kiosk.yaml
+  vars:
+    kiosk_url: "http://127.0.0.1:1880"
+

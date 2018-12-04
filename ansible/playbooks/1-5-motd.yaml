@@ -1,0 +1,9 @@
+- hosts: demo
+  tasks:
+    - name: Change banner to please Franck
+      copy:
+        src: ../private-files/rpitouch.motd
+        dest: /etc/motd
+        owner: root
+        mode: 0644
+        #content: Welcome to the Tellu Gateway !

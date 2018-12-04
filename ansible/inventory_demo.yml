@@ -1,0 +1,10 @@
+demo:
+    hosts:
+        TelluGW01:
+            ansible_ssh_host: 10.3.1.189    # IP address of the RPi to configure
+    vars:
+        ansible_become: yes
+        ansible_ssh_user: pi
+        ansible_ssh_private_key_file: ./private-files/ansible_ssh_key
+        ansible_ssh_pass: "raspberry"
+

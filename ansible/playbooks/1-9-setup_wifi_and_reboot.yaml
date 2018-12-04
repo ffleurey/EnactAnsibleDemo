@@ -1,0 +1,19 @@
+- hosts: demo
+  tasks:
+#    - name: 'Configure WIFI'
+#      copy: src=../private-files/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf mode=0600
+      
+    - name: 'Configure WIFI'
+      template:
+        src: ../private-files/wpa_supplicant.conf
+        dest: /etc/wpa_supplicant/wpa_supplicant.conf
+        # owner: root
+        # group: root
+        # mode: 0666
+
+    - name: 'Reboot'
+      shell: sleep 2 && reboot
+      async: 1
+      poll: 0
+      ignore_errors: true
+

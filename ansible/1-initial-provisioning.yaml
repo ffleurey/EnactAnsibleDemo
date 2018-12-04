@@ -1,0 +1,6 @@
+ - import_playbook: ./playbooks/1-1-ssh_authorized_key.yaml
+ - import_playbook: ./playbooks/1-2-change_password.yaml
+ - import_playbook: ./playbooks/1-3-ssh-hardening.yaml
+ - import_playbook: ./playbooks/1-4-hostname.yaml
+ - import_playbook: ./playbooks/1-5-motd.yaml
+ - import_playbook: ./playbooks/1-7-update-packages-and-reboot.yaml

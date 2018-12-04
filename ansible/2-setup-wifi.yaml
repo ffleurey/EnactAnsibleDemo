@@ -1,0 +1,4 @@
+- import_playbook: ./playbooks/1-9-setup_wifi_and_reboot.yaml
+  vars:
+    wifi_ssid: "FreeWifi"
+    wifi_password: "XXXXXXXXXXXXX"
